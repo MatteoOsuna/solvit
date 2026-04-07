@@ -686,6 +686,11 @@
         </div>
 
         <div class="form-group">
+          <label for="f_telefono">Teléfono</label>
+          <input type="text" id="f_telefono" placeholder="Ej: +54 9 11 1234-5678" />
+        </div>
+
+        <div class="form-group">
           <label>Disponibilidad horaria</label>
           <div class="time-row">
             <div>
@@ -808,6 +813,10 @@
       <div class="form-group">
         <label>Profesión / Ocupación</label>
         <input type="text" id="e_profesion" />
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="text" id="e_telefono" placeholder="Ej: +54 9 11 1234-5678" />
       </div>
       <div class="form-group">
         <label>Disponibilidad horaria</label>
@@ -1053,6 +1062,7 @@
           <td class="td-muted">${r.edad ?? '—'}</td>
           <td class="td-muted">${esc(r.genero) || '—'}</td>
           <td class="td-muted">${esc(r.profesion) || '—'}</td>
+          <td class="td-muted">${esc(r.telefono) || '—'}</td>
           <td class="td-muted" style="white-space:nowrap;">${disp}</td>
           <td>${verif}</td>
           <td>
@@ -1073,6 +1083,7 @@
             <th>Edad</th>
             <th>Género</th>
             <th>Profesión</th>
+            <th>Teléfono</th>
             <th>Disponibilidad</th>
             <th>Verificación</th>
             <th></th>
@@ -1092,6 +1103,7 @@
     document.getElementById('e_edad').value    = r.edad ?? '';
     document.getElementById('e_genero').value  = r.genero || '';
     document.getElementById('e_profesion').value = r.profesion || '';
+    document.getElementById('e_telefono').value  = r.telefono || '';
     buildTimeOptions('e_desde', r.disponibilidad_desde?.substring(0,5) || '');
     buildTimeOptions('e_hasta', r.disponibilidad_hasta?.substring(0,5) || '');
     document.getElementById('e_verif').value   = r.verificacion || '';
@@ -1150,6 +1162,7 @@
       disponibilidad_desde: document.getElementById(prefix + 'desde').value || null,
       disponibilidad_hasta: document.getElementById(prefix + 'hasta').value || null,
       verificacion:         document.getElementById(prefix + 'verif').value || null,
+      telefono:             document.getElementById(prefix + 'telefono').value.trim() || null,
     };
   }
 
