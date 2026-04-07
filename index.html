@@ -145,7 +145,6 @@
     input[type="email"],
     input[type="password"],
     input[type="number"],
-    input[type="time"],
     select {
       width: 100%;
       background: var(--bg-input);
@@ -691,12 +690,12 @@
           <div class="time-row">
             <div>
               <span class="time-sub-label">Desde</span>
-              <input type="time" id="f_desde" />
+              <select id="f_desde"></select>
             </div>
             <div class="time-sep">→</div>
             <div>
               <span class="time-sub-label">Hasta</span>
-              <input type="time" id="f_hasta" />
+              <select id="f_hasta"></select>
             </div>
           </div>
         </div>
@@ -815,12 +814,12 @@
         <div class="time-row">
           <div>
             <span class="time-sub-label">Desde</span>
-            <input type="time" id="e_desde" />
+            <select id="e_desde"></select>
           </div>
           <div class="time-sep">→</div>
           <div>
             <span class="time-sub-label">Hasta</span>
-            <input type="time" id="e_hasta" />
+            <select id="e_hasta"></select>
           </div>
         </div>
       </div>
@@ -874,6 +873,29 @@
   let allRecords = [];
   let editingId  = null;
 
+  // ── TIME SELECTS ──────────────────────────────────────────
+  function buildTimeOptions(selectId, selectedValue) {
+    const sel = document.getElementById(selectId);
+    sel.innerHTML = '<option value="">— Sin definir —</option>';
+    for (let h = 0; h < 24; h++) {
+      for (let m of [0, 30]) {
+        const hh = String(h).padStart(2, '0');
+        const mm = String(m).padStart(2, '0');
+        const val = `${hh}:${mm}`;
+        const label = `${hh}:${mm}`;
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = label;
+        if (selectedValue && selectedValue.startsWith(val)) opt.selected = true;
+        sel.appendChild(opt);
+      }
+    }
+  }
+
+  function initTimeSelects() {
+    ['f_desde','f_hasta','e_desde','e_hasta'].forEach(id => buildTimeOptions(id, ''));
+  }
+
   // ── UUID ───────────────────────────────────────────────────
   function newUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
@@ -922,6 +944,7 @@
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('navUserEmail').textContent = user.email;
     document.getElementById('f_id').value = newUUID();
+    initTimeSelects();
     loadRecords();
   }
 
@@ -1069,8 +1092,8 @@
     document.getElementById('e_edad').value    = r.edad ?? '';
     document.getElementById('e_genero').value  = r.genero || '';
     document.getElementById('e_profesion').value = r.profesion || '';
-    document.getElementById('e_desde').value   = r.disponibilidad_desde?.substring(0,5) || '';
-    document.getElementById('e_hasta').value   = r.disponibilidad_hasta?.substring(0,5) || '';
+    buildTimeOptions('e_desde', r.disponibilidad_desde?.substring(0,5) || '');
+    buildTimeOptions('e_hasta', r.disponibilidad_hasta?.substring(0,5) || '');
     document.getElementById('e_verif').value   = r.verificacion || '';
 
     document.getElementById('editOverlay').classList.add('open');
