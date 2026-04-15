@@ -1,0 +1,10 @@
+# Claude Code internals
+.claude/
+
+# Archivos internos / no necesarios en producción
+AFIRMACIONES PARA LA PPT.txt
+Benchmark SolvIT.docx
+SolvIT.pdf
+tam sam som slide.png
+video de la app.mp4
+video de la app_crop.mp4
