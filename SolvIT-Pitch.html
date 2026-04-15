@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolvIT — Pitch Deck 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ===================================================
+   TEMA — Colores de marca SolvIT
+   Cambiar las variables :root modifica toda la presentación
+   =================================================== */
+:root {
+  --bg-deep:    #091410;
+  --bg-primary: #0d1c14;
+  --bg-card:    rgba(40, 63, 59, 0.45);
+
+  --text-primary:   #e4f0eb;
+  --text-secondary: rgba(228, 240, 235, 0.55);
+  --text-dim:       rgba(228, 240, 235, 0.28);
+
+  --accent-mint:  #99DDC8;
+  --accent-green: #659B5E;
+  --accent-mid:   #556F44;
+  --accent-dark:  #283F3B;
+
+  --border-subtle: rgba(153, 221, 200, 0.10);
+  --border-accent: rgba(153, 221, 200, 0.28);
+
+  /* Tipografía — siempre clamp() */
+  --title-size: clamp(1.7rem, 5.2vw, 4.2rem);
+  --h2-size:    clamp(1.2rem, 3vw, 2.3rem);
+  --body-size:  clamp(0.72rem, 1.3vw, 1rem);
+  --small-size: clamp(0.58rem, 0.85vw, 0.74rem);
+  --stat-size:  clamp(1.8rem, 5.5vw, 4rem);
+
+  /* Espaciado */
+  --slide-pad: clamp(1.4rem, 4vw, 3.8rem);
+  --gap:       clamp(0.7rem, 1.8vw, 1.8rem);
+  --el-gap:    clamp(0.35rem, 0.9vw, 0.9rem);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===================================================
+   VIEWPORT BASE CSS — Mandatory (no modificar)
+   =================================================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%; overflow-x: hidden;
+  font-family: 'Sora', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.slide {
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  position: relative; background: var(--bg-primary);
+}
+
+.slide-content {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; max-height: 100%; overflow: hidden;
+  padding: 0 var(--slide-pad) var(--slide-pad);
+}
+
+/* slides cuyo contenido llena la altura */
+.slide-data .slide-content,
+.slide-company .slide-content,
+.slide-demo .slide-content,
+.slide-market .slide-content { justify-content: flex-start; }
+
+@media (max-height: 700px) {
+  :root { --slide-pad: clamp(0.7rem,3vw,1.8rem); --gap: clamp(0.4rem,1.2vw,1rem); --title-size: clamp(1.3rem,4.2vw,2.6rem); --h2-size: clamp(1rem,2.6vw,1.6rem); --stat-size: clamp(1.4rem,4vw,2.8rem); }
+}
+@media (max-height: 600px) {
+  :root { --slide-pad: clamp(0.5rem,2vw,1.2rem); --title-size: clamp(1.1rem,3.8vw,2rem); --body-size: clamp(0.62rem,1vw,0.85rem); }
+  .nav-dots, .keyboard-hint { display: none; }
+}
+@media (max-height: 500px) {
+  :root { --slide-pad: clamp(0.35rem,1.8vw,0.9rem); --title-size: clamp(1rem,3.2vw,1.5rem); --h2-size: clamp(0.9rem,2.2vw,1.25rem); }
+}
+@media (max-width: 600px) {
+  :root { --title-size: clamp(1.3rem,6.5vw,2.5rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ===================================================
+   COMPONENTES GLOBALES
+   =================================================== */
+
+/* Línea de acento superior */
+.accent-line {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--accent-mint), var(--accent-green) 45%, transparent);
+  z-index: 10; flex-shrink: 0;
+}
+
+/* Header de slide */
+.slide-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: clamp(0.9rem,2.2vh,1.6rem) var(--slide-pad) 0;
+  flex-shrink: 0;
+}
+
+.logo-mark { display: flex; align-items: center; gap: 0.5rem; }
+.logo-icon {
+  width: clamp(26px,2.8vw,36px); height: clamp(26px,2.8vw,36px);
+  background: linear-gradient(135deg, var(--accent-mint), var(--accent-green));
+  border-radius: clamp(5px,0.8vw,9px) clamp(5px,0.8vw,9px) clamp(5px,0.8vw,9px) 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: var(--bg-deep);
+  font-size: clamp(0.65rem,1.1vw,0.9rem); flex-shrink: 0;
+}
+.logo-text { font-weight: 700; color: var(--text-primary); font-size: clamp(0.8rem,1.4vw,1.1rem); letter-spacing: 0.02em; line-height: 1; }
+.logo-text .it { color: var(--accent-mint); }
+.slide-num { font-size: var(--small-size); color: var(--text-dim); letter-spacing: 0.15em; font-weight: 600; text-transform: uppercase; }
+
+/* Footer de slide */
+.slide-footer {
+  padding: 0 var(--slide-pad) clamp(0.7rem,1.8vh,1.3rem);
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-shrink: 0;
+}
+.source-text { font-size: clamp(0.5rem,0.72vw,0.62rem); color: var(--text-dim); font-style: italic; }
+
+/* Tag de sección */
+.section-tag {
+  display: inline-flex; align-items: center; gap: 0.38rem;
+  background: rgba(153,221,200,0.07); border: 1px solid var(--border-accent);
+  color: var(--accent-mint); padding: 0.28em 0.8em; border-radius: 100px;
+  font-size: var(--small-size); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: var(--el-gap); align-self: flex-start;
+}
+.section-tag::before { content:''; width:5px; height:5px; background:var(--accent-mint); border-radius:50%; flex-shrink:0; }
+
+/* ===================================================
+   BARRA DE PROGRESO
+   =================================================== */
+.progress-bar {
+  position: fixed; top: 0; left: 0; z-index: 100;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--accent-mint), var(--accent-green));
+  transition: width 0.3s ease; pointer-events: none;
+}
+
+/* ===================================================
+   PUNTOS DE NAVEGACIÓN
+   =================================================== */
+.nav-dots {
+  position: fixed; right: clamp(0.7rem,1.8vw,1.3rem); top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: clamp(5px,0.9vh,9px);
+  z-index: 50;
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(153,221,200,0.18); cursor: pointer;
+  transition: all 0.3s ease; border: none; padding: 0;
+}
+.nav-dot.active { background: var(--accent-mint); transform: scale(1.55); }
+.nav-dot:hover  { background: rgba(153,221,200,0.55); }
+
+/* ===================================================
+   HINT DE TECLADO
+   =================================================== */
+.keyboard-hint {
+  position: fixed; bottom: clamp(0.7rem,1.3vh,1rem); left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 0.9rem; z-index: 50;
+  pointer-events: none; opacity: 0.45;
+  font-size: clamp(0.48rem,0.72vw,0.62rem); color: var(--text-dim);
+  transition: opacity 0.6s ease;
+}
+.keyboard-hint.hidden { opacity: 0; }
+.kbd {
+  background: rgba(153,221,200,0.07); border: 1px solid var(--border-subtle);
+  border-radius: 4px; padding: 0.1em 0.4em; font-family: inherit; font-size: inherit; color: var(--text-dim);
+}
+
+/* ===================================================
+   NOTAS DEL PRESENTADOR
+   Presionar N para abrir/cerrar durante el pitch
+   =================================================== */
+.notes-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(7,16,10,0.97); border-top: 1px solid var(--border-accent);
+  padding: clamp(0.7rem,1.8vh,1.4rem) clamp(1.4rem,4vw,3rem);
+  transform: translateY(100%); transition: transform 0.4s var(--ease-expo);
+  backdrop-filter: blur(14px);
+}
+.notes-panel.open { transform: translateY(0); }
+.notes-label {
+  font-size: var(--small-size); color: var(--accent-mint);
+  letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700;
+  margin-bottom: 0.45em; display: flex; align-items: center; gap: 0.4rem;
+}
+.notes-label::before { content: '📝'; font-size: 0.9em; }
+.notes-text {
+  font-size: clamp(0.68rem,1.05vw,0.88rem); color: var(--text-secondary);
+  line-height: 1.75; font-weight: 300; max-height: 16vh; overflow-y: auto;
+}
+.notes-close {
+  position: absolute; top: 0.45rem; right: 1rem;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-dim); font-size: 1.2rem; padding: 0.25rem;
+  transition: color 0.2s;
+}
+.notes-close:hover { color: var(--accent-mint); }
+.notes-toggle-hint {
+  position: fixed; bottom: clamp(0.7rem,1.3vh,1rem); right: clamp(0.7rem,1.8vw,1.3rem);
+  z-index: 50; opacity: 0.3; pointer-events: none;
+  font-size: var(--small-size); color: var(--text-dim);
+}
+
+/* ===================================================
+   MODO EDICIÓN (inline)
+   Hover esquina sup. izquierda o tecla E
+   =================================================== */
+.edit-hotzone {
+  position: fixed; top: 0; left: 0;
+  width: 80px; height: 80px; z-index: 9999; cursor: pointer;
+}
+.edit-toggle {
+  position: fixed; top: clamp(0.45rem,1.2vh,0.9rem); left: clamp(0.45rem,1.2vw,0.9rem);
+  z-index: 10000; background: rgba(40,63,59,0.92); border: 1px solid var(--border-accent);
+  color: var(--text-primary); padding: 0.38em 0.78em; border-radius: 8px;
+  font-size: var(--small-size); font-family: 'Sora', sans-serif; cursor: pointer; font-weight: 600;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s, background 0.2s; letter-spacing: 0.06em;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: var(--accent-green); color: var(--bg-deep); border-color: var(--accent-green); }
+
+.edit-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-mint));
+  color: var(--bg-deep); text-align: center; padding: 0.3em 1em;
+  font-size: var(--small-size); font-weight: 700; font-family: 'Sora', sans-serif;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transform: translateY(-100%); transition: transform 0.3s ease;
+}
+.edit-banner.show { transform: translateY(0); }
+
+[contenteditable="true"] { outline: 1px dashed var(--accent-mint); border-radius: 3px; cursor: text; caret-color: var(--accent-mint); }
+[contenteditable="true"]:focus { outline: 2px solid var(--accent-mint); background: rgba(153,221,200,0.03); }
+
+/* ===================================================
+   ANIMACIONES DE REVEAL
+   .visible se añade por JS cuando el slide entra en viewport
+   =================================================== */
+/* Reveal — elementos que aparecen al entrar la slide
+   Principio: el opacity hace el trabajo; el movimiento es un susurro */
+.reveal {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+/* Delays escalonados: 0.2s de espera inicial, 0.15s entre cada elemento */
+.reveal:nth-child(1) { transition-delay: 0.2s; }
+.reveal:nth-child(2) { transition-delay: 0.35s; }
+.reveal:nth-child(3) { transition-delay: 0.5s; }
+.reveal:nth-child(4) { transition-delay: 0.65s; }
+.reveal:nth-child(5) { transition-delay: 0.8s; }
+.reveal:nth-child(6) { transition-delay: 0.95s; }
+
+.reveal-scale {
+  opacity: 0; transform: scale(0.97);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-delay: 0.2s;
+}
+.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+
+/* Entrada de slide — sutil, misma dirección, sin acumulación de movimientos */
+@keyframes elemFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide.visible .accent-line {
+  animation: elemFadeUp 0.5s ease-out 0s both;
+}
+.slide.visible .slide-header {
+  animation: elemFadeUp 0.5s ease-out 0.08s both;
+}
+
+/* ===================================================
+   SLIDE 1 — HOOK
+   =================================================== */
+.slide-hook { background: var(--bg-primary); }
+.slide-hook::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 65% at 50% 50%, rgba(101,155,94,0.11) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 18% 82%, rgba(153,221,200,0.05) 0%, transparent 60%);
+}
+.slide-hook::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(153,221,200,0.022) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(153,221,200,0.022) 1px, transparent 1px);
+  background-size: 66px 66px;
+}
+
+.hook-content {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  max-width: min(80vw, 840px); margin: 0 auto;
+  position: relative; z-index: 1; gap: var(--gap);
+}
+.hook-question {
+  font-size: var(--title-size); font-weight: 800; line-height: 1.08;
+  color: var(--text-primary); letter-spacing: -0.02em;
+}
+.hook-question .hi { color: var(--accent-mint); }
+.hook-sub {
+  font-size: clamp(0.82rem,1.5vw,1.1rem); color: var(--text-secondary);
+  font-weight: 300; line-height: 1.65; max-width: min(58vw,520px);
+}
+
+/* === SLIDE 1 — CAÑOS ROTOS (fondo decorativo) === */
+.pipes-scene {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+
+/* ===================================================
+   SLIDE 2 — DATOS DEL PROBLEMA
+   =================================================== */
+.slide-data { background: var(--bg-deep); }
+.slide-data::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(101,155,94,0.07) 0%, transparent 60%);
+}
+
+/* === SLIDE 2 — layout elegante dos columnas === */
+.s2-layout {
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  flex: 1; min-height: 0; position: relative;
+}
+.s2-layout::after {
+  content: ''; position: absolute;
+  left: calc(1.15fr); top: 8%; height: 84%; width: 1px;
+  left: 55.8%; /* aprox 1.15/(1.15+0.85) */
+  background: linear-gradient(to bottom, transparent, rgba(153,221,200,0.30) 25%, rgba(153,221,200,0.30) 75%, transparent);
+  pointer-events: none;
+}
+@media (max-width:700px) { .s2-layout { grid-template-columns: 1fr; } .s2-layout::after { display:none; } }
+
+.s2-left {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.2rem,2.8vh,2.4rem);
+  padding-right: clamp(1.5rem,3.5vw,3.5rem);
+}
+.s2-headline {
+  font-size: clamp(1.75rem,3.8vw,3.2rem);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.03em; color: var(--text-primary);
+}
+.s2-headline em { font-style: normal; color: var(--accent-mint); }
+
+.s2-quotes {
+  display: flex; flex-direction: column;
+  gap: clamp(1rem,2.2vh,1.8rem);
+  border-left: 2px solid rgba(153,221,200,0.45);
+  padding-left: clamp(1rem,1.8vw,1.5rem);
+}
+.s2-quote { display: flex; flex-direction: column; gap: 0.3rem; }
+.s2-quote-text {
+  font-size: clamp(0.85rem,1.35vw,1.08rem);
+  color: rgba(228,240,235,0.92); line-height: 1.5; font-weight: 400;
+}
+.s2-quote-src {
+  font-size: clamp(0.6rem,0.85vw,0.72rem);
+  color: rgba(153,221,200,0.72); font-style: italic; text-decoration: none;
+}
+.s2-quote-src:hover { color: var(--accent-mint); }
+
+.s2-right {
+  display: flex; flex-direction: column;
+  gap: clamp(0.6rem,1.4vh,1.1rem);
+  padding-left: clamp(1.5rem,3.5vw,3.5rem);
+  justify-content: center;
+}
+.s2-stat {
+  display: flex; flex-direction: column; gap: 0.3rem;
+  padding: clamp(0.65rem,1.2vw,1rem);
+  background: rgba(153,221,200,0.04);
+  border: 1px solid rgba(153,221,200,0.12);
+  border-top: 2px solid rgba(153,221,200,0.42);
+  border-radius: 8px;
+}
+.s2-num {
+  font-size: clamp(1.9rem,3.8vw,3.2rem);
+  font-weight: 800; color: var(--accent-mint);
+  letter-spacing: -0.04em; line-height: 1;
+}
+.s2-label {
+  font-size: clamp(0.6rem,0.9vw,0.75rem);
+  color: rgba(228,240,235,0.88); line-height: 1.35; font-weight: 400;
+}
+.s2-src {
+  font-size: clamp(0.44rem,0.65vw,0.55rem);
+  color: rgba(153,221,200,0.85); font-style: italic; margin-top: 0.1rem;
+}
+
+/* === SLIDE 2 — Animaciones secuenciadas === */
+
+/* 1. Titular: entra desde la izquierda */
+#slide-2 .s2-headline {
+  opacity: 0;
+  transform: translateX(-48px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  transition-delay: 0.2s;
+}
+#slide-2.visible .s2-headline { opacity: 1; transform: translateX(0); }
+
+/* 2. Citas individuales: fade+up escalonado */
+#slide-2 .s2-quote {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+#slide-2 .s2-quote:nth-child(1) { transition-delay: 0.85s; }
+#slide-2 .s2-quote:nth-child(2) { transition-delay: 1.1s;  }
+#slide-2 .s2-quote:nth-child(3) { transition-delay: 1.35s; }
+#slide-2.visible .s2-quote { opacity: 1; transform: translateY(0); }
+
+/* 3. Stats: deslizan desde la derecha, uno por uno */
+#slide-2 .s2-stat {
+  opacity: 0;
+  transform: translateX(55px);
+  transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1),
+              transform 0.85s cubic-bezier(0.16,1,0.3,1);
+}
+#slide-2 .s2-stat:nth-child(1) { transition-delay: 2.0s;  }
+#slide-2 .s2-stat:nth-child(2) { transition-delay: 2.35s; }
+#slide-2 .s2-stat:nth-child(3) { transition-delay: 2.7s;  }
+#slide-2.visible .s2-stat { opacity: 1; transform: translateX(0); }
+
+/* ===================================================
+   SLIDE 3 — SOLVIT (EMPRESA)
+   =================================================== */
+.slide-company { background: var(--bg-primary); }
+.slide-company::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 45% 75% at 105% 50%, rgba(153,221,200,0.05) 0%, transparent 55%);
+}
+
+.company-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1.4rem,3.8vw,3.2rem); align-items: center;
+  flex: 1; min-height: 0;
+}
+@media (max-width: 700px) { .company-layout { grid-template-columns: 1fr; gap: 0.8rem; } }
+
+.big-logo { display: flex; align-items: center; gap: clamp(0.55rem,1.1vw,0.9rem); margin-bottom: clamp(0.6rem,1.5vh,1.2rem); }
+.big-logo-icon {
+  width: clamp(38px,5.5vw,66px); height: clamp(38px,5.5vw,66px);
+  background: linear-gradient(135deg, var(--accent-mint), var(--accent-green));
+  border-radius: clamp(9px,1.4vw,17px) clamp(9px,1.4vw,17px) clamp(9px,1.4vw,17px) 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: var(--bg-deep);
+  font-size: clamp(1.1rem,2.4vw,1.9rem); flex-shrink: 0;
+}
+.big-logo-name { font-size: clamp(1.4rem,3.8vw,2.9rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1; }
+.big-logo-name .it { color: var(--accent-mint); }
+
+.company-tagline { font-size: clamp(0.8rem,1.5vw,1.1rem); color: var(--accent-mint); font-style: italic; font-weight: 300; margin-bottom: clamp(0.4rem,1vh,0.8rem); line-height: 1.4; }
+.company-desc   { font-size: var(--body-size); color: var(--text-secondary); line-height: 1.65; font-weight: 300; margin-bottom: clamp(0.6rem,1.5vh,1.2rem); }
+
+.team-label { font-size: var(--small-size); color: var(--text-dim); letter-spacing: 0.09em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.38rem; }
+.team-row   { display: flex; flex-wrap: wrap; gap: clamp(0.35rem,0.8vw,0.65rem); }
+.team-chip  {
+  background: rgba(40,63,59,0.55); border: 1px solid var(--border-subtle);
+  border-radius: 100px; padding: 0.24em 0.65em;
+  font-size: var(--small-size); font-weight: 500; color: var(--text-secondary); white-space: nowrap;
+}
+.team-chip strong { color: var(--text-primary); font-weight: 700; }
+
+.pillars-col { display: flex; flex-direction: column; gap: clamp(0.45rem,1.2vh,1rem); }
+.pillars-label { font-size: var(--small-size); color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.25rem; }
+.pillar-card {
+  background: rgba(40,63,59,0.3); border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-green);
+  border-radius: 0 clamp(7px,1.1vw,11px) clamp(7px,1.1vw,11px) 0;
+  padding: clamp(0.55rem,1.3vw,1rem) clamp(0.75rem,1.8vw,1.3rem);
+  display: flex; flex-direction: column; gap: 0.18rem;
+}
+.pillar-num   { font-size: var(--small-size); font-weight: 700; color: var(--accent-green); letter-spacing: 0.1em; }
+.pillar-title { font-size: clamp(0.75rem,1.3vw,1rem); font-weight: 700; color: var(--text-primary); }
+.pillar-desc  { font-size: var(--small-size); color: var(--text-secondary); font-weight: 300; line-height: 1.45; }
+
+/* ===================================================
+   SLIDE 4 — CLIENTE IDEAL
+   Layout asimétrico: avatar izquierda / lista editorial derecha
+   =================================================== */
+.s4-layout {
+  display: grid; grid-template-columns: 36% 64%;
+  gap: clamp(1.5rem,5vw,5rem); align-items: center;
+  flex: 1; min-height: 0;
+}
+@media (max-width: 700px) { .s4-layout { grid-template-columns: 1fr; } }
+
+/* — Columna izquierda: persona — */
+.s4-persona {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(0.6rem,1.4vh,1.2rem);
+}
+.s4-avatar-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+.s4-glow {
+  position: absolute; width: clamp(180px,28vw,320px); height: clamp(180px,28vw,320px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100,200,180,0.22) 0%, transparent 68%);
+  top: 50%; left: 50%; transform: translate(-50%,-55%); pointer-events: none;
+}
+.s4-avatar {
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  height: clamp(220px,38vh,420px); width: auto;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 6px 20px rgba(100,200,180,0.28));
+}
+.s4-avatar-label {
+  font-size: clamp(0.6rem,0.9vw,0.76rem); letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-dim); font-weight: 600; margin-top: 0.25rem;
+}
+.s4-chips {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem;
+}
+.s4-chip {
+  font-size: clamp(0.66rem,1vw,0.84rem); padding: 0.28em 0.75em;
+  border: 1px solid var(--border-subtle); border-radius: 999px;
+  color: var(--text-secondary); font-weight: 600; background: var(--bg-card); white-space: nowrap;
+}
+.s4-quote {
+  font-size: clamp(0.8rem,1.2vw,1rem); color: var(--text-secondary);
+  font-weight: 300; font-style: italic; line-height: 1.5;
+  text-align: center; max-width: 24ch; margin: 0;
+}
+
+/* — Columna derecha: lista editorial — */
+.s4-right {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: clamp(0.45rem,1.2vh,1rem);
+}
+.s4-eyebrow {
+  font-size: clamp(0.68rem,1.05vw,0.88rem); font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-mint);
+}
+.s4-title {
+  font-size: clamp(1.5rem,3.2vw,2.6rem); font-weight: 800;
+  letter-spacing: -0.025em; line-height: 1.06; color: var(--text-primary);
+  margin-bottom: 0.1rem;
+}
+.s4-title em { color: var(--accent-mint); font-style: normal; }
+.s4-rule { height: 1px; background: var(--border-subtle); margin: 0.1rem 0 0.2rem; }
+.s4-list { display: flex; flex-direction: column; gap: 0; }
+.s4-item {
+  display: grid; grid-template-columns: clamp(2.5rem,3.8vw,3.5rem) 1fr;
+  gap: clamp(0.7rem,1.4vw,1.3rem); align-items: start;
+  padding: clamp(0.5rem,1vh,0.85rem) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.s4-item:last-child { border-bottom: none; }
+.s4-num {
+  font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 800;
+  color: rgba(153,221,200,0.13); line-height: 1;
+  letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
+  padding-top: 0.05em;
+}
+.s4-item-body { display: flex; flex-direction: column; gap: 0.1rem; }
+.s4-item-label {
+  font-size: clamp(0.66rem,1vw,0.84rem); font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-mint);
+}
+.s4-item-val {
+  font-size: clamp(0.92rem,1.5vw,1.18rem); font-weight: 700;
+  color: var(--text-primary); line-height: 1.2;
+}
+.s4-item-sub {
+  font-size: clamp(0.7rem,1.08vw,0.9rem); color: var(--text-secondary);
+  font-weight: 300; line-height: 1.3;
+}
+
+/* === SLIDE 4 — Animaciones secuenciadas === */
+
+/* 1. Eyebrow + título: primero */
+#slide-4 .s4-eyebrow {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-delay: 0.2s;
+}
+#slide-4 .s4-title {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition-delay: 0.4s;
+}
+#slide-4.visible .s4-eyebrow,
+#slide-4.visible .s4-title { opacity: 1; transform: translateY(0); }
+
+/* 2. Avatar, chips y cita: columna izquierda */
+#slide-4 .s4-avatar-wrap {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition-delay: 0.8s;
+}
+#slide-4 .s4-chips {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+  transition-delay: 1.1s;
+}
+#slide-4 .s4-quote {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+  transition-delay: 1.35s;
+}
+#slide-4.visible .s4-avatar-wrap,
+#slide-4.visible .s4-chips,
+#slide-4.visible .s4-quote { opacity: 1; transform: translateY(0); }
+
+/* 3. Items 01–04: escalonados */
+#slide-4 .s4-item {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+#slide-4 .s4-item:nth-child(1) { transition-delay: 1.6s;  }
+#slide-4 .s4-item:nth-child(2) { transition-delay: 2.0s;  }
+#slide-4 .s4-item:nth-child(3) { transition-delay: 2.4s;  }
+#slide-4 .s4-item:nth-child(4) { transition-delay: 2.8s;  }
+#slide-4.visible .s4-item { opacity: 1; transform: translateY(0); }
+
+/* ===================================================
+   SLIDE 4 — DEMO (PHONE MOCKUP + VIDEO)
+   =================================================== */
+.slide-demo { background: var(--bg-deep); }
+.slide-demo::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(153,221,200,0.035) 0%, transparent 65%);
+}
+
+.demo-layout {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(1.8rem,4vw,4rem);
+  flex: 1; min-height: 0;
+}
+@media (max-width: 650px) { .demo-layout { flex-direction: column; gap: 1rem; } }
+
+.demo-info { flex: 0 1 auto; min-width: 0; max-width: min(46vw, 480px); }
+.demo-title { font-size: clamp(1.5rem,3.6vw,2.8rem); font-weight: 800; line-height: 1.1; color: var(--text-primary); margin-bottom: var(--gap); }
+.demo-steps { list-style: none; display: flex; flex-direction: column; gap: clamp(0.45rem,1.2vh,0.95rem); }
+.demo-step  { display: flex; align-items: flex-start; gap: 0.7rem; }
+.step-num {
+  width: clamp(20px,2.6vw,28px); height: clamp(20px,2.6vw,28px);
+  background: var(--accent-green); border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(0.52rem,0.85vw,0.72rem); font-weight: 800; color: var(--bg-deep);
+}
+.step-text { font-size: clamp(0.85rem,1.6vw,1.2rem); color: var(--text-secondary); font-weight: 300; line-height: 1.5; padding-top: 0.12em; }
+.step-text strong { color: var(--text-primary); font-weight: 600; }
+
+/* Teléfono CSS */
+.phone-wrap { flex-shrink: 0; }
+.phone-frame {
+  width: clamp(200px,26vw,360px); height: clamp(480px,88vh,920px);
+  border: 2px solid rgba(153,221,200,0.28); border-radius: clamp(18px,2.8vw,34px);
+  background: #000; position: relative; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(153,221,200,0.07), 0 18px 55px rgba(0,0,0,0.5);
+}
+.phone-frame::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 36%; height: clamp(14px,2.2vw,20px);
+  background: #060d07; border-radius: 0 0 11px 11px; z-index: 2;
+}
+.phone-frame::after {
+  content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(180deg, rgba(153,221,200,0.04) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.18) 100%);
+  border-radius: inherit;
+}
+.phone-video   { width: 100%; height: 100%; object-fit: cover; display: none; }
+.phone-ph {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.45rem;
+  color: var(--text-dim); font-size: var(--small-size); text-align: center; padding: 1rem;
+}
+.phone-ph-icon { font-size: clamp(1.4rem,2.8vw,2.3rem); opacity: 0.22; }
+.phone-ph p { line-height: 1.5; }
+.phone-ph strong { color: var(--text-secondary); }
+
+/* === SLIDE 3 — Animaciones secuenciadas === */
+
+/* Título: primero, fade+up */
+#slide-3 .demo-title {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition-delay: 0.25s;
+}
+#slide-3.visible .demo-title { opacity: 1; transform: translateY(0); }
+
+/* Steps: misma animación que el título pero con delays bien separados */
+#slide-3 .demo-step {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+#slide-3 .demo-step:nth-child(1) { transition-delay: 0.9s;  }
+#slide-3 .demo-step:nth-child(2) { transition-delay: 1.55s; }
+#slide-3 .demo-step:nth-child(3) { transition-delay: 2.2s;  }
+#slide-3 .demo-step:nth-child(4) { transition-delay: 2.85s; }
+#slide-3.visible .demo-step { opacity: 1; transform: translateY(0); }
+
+/* ===================================================
+   SLIDE 5 — TAM SAM SOM
+   =================================================== */
+.slide-market { background: var(--bg-primary); }
+.slide-market::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 38% 65% at 95% 50%, rgba(101,155,94,0.09) 0%, transparent 55%);
+}
+
+.market-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; align-items: center;
+  flex: 1; min-height: 0;
+}
+@media (max-width: 700px) { .market-layout { grid-template-columns: 1fr; } }
+
+.market-img-area {
+  display: flex; align-items: center; justify-content: center;
+  height: min(78vh, 620px);
+}
+
+/* === KEYFRAMES — anillos TAM/SAM/SOM === */
+@keyframes cc-expand {
+  from { transform: translate(-50%,-50%) scale(0.15); opacity: 0; }
+  to   { transform: translate(-50%,-50%) scale(1);    opacity: 1; }
+}
+@keyframes cc-som-glow {
+  0%,100% { box-shadow: inset 0 8px 28px rgba(0,0,0,0.6), 0 0 18px rgba(153,221,200,0.08); }
+  50%     { box-shadow: inset 0 8px 28px rgba(0,0,0,0.6), 0 0 38px rgba(153,221,200,0.28), 0 0 60px rgba(101,155,94,0.12); }
+}
+@keyframes cc-tam-drift {
+  0%,100% { box-shadow: inset 0 20px 70px rgba(0,0,0,0.38), 0 0 55px rgba(153,221,200,0.03); }
+  50%     { box-shadow: inset 0 20px 70px rgba(0,0,0,0.38), 0 0 55px rgba(153,221,200,0.07); }
+}
+/* Arco giratorio sobre el borde del TAM */
+@keyframes cc-scan { to { transform: rotate(360deg); } }
+/* Onda expansiva desde el SOM hacia afuera */
+@keyframes cc-ripple-out {
+  0%   { transform: translate(-50%,-50%) scale(1);    opacity: 0.7; }
+  100% { transform: translate(-50%,-50%) scale(2.85); opacity: 0;   }
+}
+
+/* === CÍRCULOS CONCÉNTRICOS TAM/SAM/SOM === */
+.concentric-circles {
+  width: min(72vh, 560px); height: min(72vh, 560px);
+  position: relative; flex-shrink: 0;
+}
+/* Base: centrados, ocultos hasta que la slide sea visible */
+.cc-ring {
+  position: absolute; border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.15);
+  opacity: 0;
+}
+/* TAM — anillo externo: tenue, atmosférico */
+.cc-tam {
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at 38% 32%,
+    rgba(153,221,200,0.13) 0%,
+    rgba(153,221,200,0.04) 52%,
+    transparent 78%);
+  border: 1.5px solid rgba(153,221,200,0.22);
+  box-shadow:
+    inset 0 20px 70px rgba(0,0,0,0.38),
+    inset 0 -14px 40px rgba(0,0,0,0.22),
+    0 0 55px rgba(153,221,200,0.04);
+}
+/* SAM — anillo medio: más denso, con volumen */
+.cc-sam {
+  width: 67%; height: 67%;
+  background: radial-gradient(ellipse at 38% 32%,
+    rgba(101,155,94,0.32) 0%,
+    rgba(101,155,94,0.10) 52%,
+    rgba(40,63,59,0.25) 100%);
+  border: 1.5px solid rgba(101,155,94,0.45);
+  box-shadow:
+    inset 0 14px 48px rgba(0,0,0,0.48),
+    inset 0 -10px 28px rgba(0,0,0,0.32),
+    0 0 28px rgba(101,155,94,0.07);
+}
+/* SOM — núcleo: sólido, brillante, pulsante */
+.cc-som {
+  width: 37%; height: 37%;
+  background: radial-gradient(ellipse at 38% 32%,
+    rgba(101,155,94,0.55) 0%,
+    rgba(40,63,59,0.98) 68%);
+  border: 2px solid rgba(85,111,68,0.8);
+  box-shadow:
+    inset 0 8px 28px rgba(0,0,0,0.6),
+    0 0 18px rgba(153,221,200,0.08);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Animaciones de entrada escalonadas (de adentro hacia afuera) */
+.slide-market.visible .cc-som {
+  animation:
+    cc-expand   0.7s cubic-bezier(0.16,1,0.3,1) 0.35s both,
+    cc-som-glow 3.8s ease-in-out               1.5s infinite;
+}
+.slide-market.visible .cc-sam {
+  animation: cc-expand 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s both;
+}
+.slide-market.visible .cc-tam {
+  animation:
+    cc-expand    0.7s cubic-bezier(0.16,1,0.3,1) 0.88s both,
+    cc-tam-drift 5s   ease-in-out               2s    infinite;
+}
+
+/* Ondas expansivas — base */
+.cc-ripple {
+  position: absolute; border-radius: 50%;
+  top: 50%; left: 50%;
+  width: 37%; height: 37%;
+  transform: translate(-50%,-50%) scale(1);
+  border: 1.5px solid rgba(153,221,200,0.55);
+  pointer-events: none; opacity: 0;
+}
+.slide-market.visible .cc-ripple   { animation: cc-ripple-out 3.6s ease-out 1.6s infinite; }
+.slide-market.visible .cc-ripple-2 { animation: cc-ripple-out 3.6s ease-out 3.4s infinite; }
+
+/* Etiquetas de anillo (TAM, SAM) */
+.cc-label {
+  position: absolute;
+  font-size: clamp(0.52rem,0.8vw,0.7rem);
+  font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.cc-tam > .cc-label { top: 8%; left: 9%; color: rgba(153,221,200,0.7); }
+.cc-sam > .cc-label { top: 9%; left: 11%; color: rgba(149,191,116,0.95); }
+/* Texto central del SOM */
+.cc-center {
+  font-size: clamp(0.62rem,0.95vw,0.82rem);
+  font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+/* === DATOS DE MERCADO (derecha) === */
+.market-data { display: flex; flex-direction: column; margin-left: calc(-1 * clamp(1.5rem, 4vw, 3.5rem)); }
+.market-data h2 { font-size: clamp(1.4rem,3.2vw,2.6rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: var(--gap); }
+
+.market-tiers { display: flex; flex-direction: column; gap: clamp(0.4rem,1vh,0.85rem); }
+
+.market-tier {
+  padding: clamp(0.5rem,1.1vw,0.85rem) clamp(0.7rem,1.5vw,1.15rem);
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-green);
+  border-radius: 0 clamp(7px,1.1vw,11px) clamp(7px,1.1vw,11px) 0;
+  display: flex; flex-direction: column; gap: 0.18rem;
+  transition: border-color 0.3s;
+}
+.market-tier:hover  { border-color: var(--border-accent); }
+.market-tier:nth-child(2) { border-left-color: rgba(153,221,200,0.5); }
+.market-tier:nth-child(3) { border-left-color: rgba(153,221,200,0.28); }
+
+/* Fila superior: acrónimo + valor en la misma línea */
+.tier-header { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.tier-acro   { font-size: clamp(0.7rem,1.05vw,0.9rem); font-weight: 800; letter-spacing: 0.12em; color: var(--accent-mint); text-transform: uppercase; white-space: nowrap; }
+.tier-value  { font-size: clamp(1.1rem,2.3vw,1.8rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; white-space: nowrap; }
+
+/* Bullets de datos */
+.tier-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.06rem; }
+.tier-bullets li {
+  font-size: clamp(0.85rem,1.3vw,1.08rem); color: rgba(228, 240, 235, 0.88);
+  font-weight: 400; line-height: 1.35; padding-left: 0.72em; position: relative;
+}
+.tier-bullets li::before { content: '·'; position: absolute; left: 0; color: var(--accent-green); font-weight: 700; }
+
+.market-footnote { margin-top: clamp(0.4rem,1vh,0.8rem); font-size: clamp(0.44rem,0.66vw,0.57rem); color: var(--text-dim); font-style: italic; line-height: 1.5; }
+.market-unit-note {
+  margin-top: 0.55rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(153,221,200,0.08);
+  border: 1px solid rgba(153,221,200,0.25);
+  border-radius: 6px;
+  font-size: clamp(0.78rem,1.1vw,0.95rem);
+  color: rgba(153,221,200,0.92);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 0.45em;
+}
+.market-unit-note::before {
+  content: '⌂';
+  font-size: 1.2em;
+  color: var(--accent-mint);
+  line-height: 1;
+}
+
+/* ===================================================
+   SLIDE 6 — CIERRE
+   =================================================== */
+.slide-closing { background: var(--bg-deep); }
+.slide-closing::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 70% at 28% 52%, rgba(40,63,59,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 45% at 82% 28%, rgba(153,221,200,0.04) 0%, transparent 50%);
+}
+
+.closing-layout {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(2.5rem,5vw,5rem); flex: 1; min-height: 0;
+}
+@media (max-width: 650px) { .closing-layout { flex-direction: column; gap: 1.2rem; } }
+
+.closing-text { flex: 0 1 auto; max-width: min(52vw, 500px); }
+.closing-thanks { font-size: var(--small-size); font-weight: 700; color: var(--accent-green); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: clamp(0.45rem,1.2vh,0.95rem); }
+.closing-quote { font-size: clamp(1.25rem,3.6vw,2.85rem); font-weight: 700; line-height: 1.2; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: clamp(0.55rem,1.4vh,1.1rem); }
+.closing-quote em { font-style: normal; color: var(--accent-mint); }
+.closing-sub  { font-size: clamp(0.78rem,1.35vw,0.98rem); color: var(--text-secondary); font-weight: 300; line-height: 1.6; margin-bottom: clamp(0.9rem,2.2vh,1.8rem); }
+.contact-row  { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+.contact-item { font-size: var(--small-size); color: var(--text-dim); }
+.contact-sep  { color: var(--border-accent); }
+
+/* QR */
+.qr-area { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: clamp(0.45rem,1.2vh,0.9rem); }
+.qr-box {
+  width: clamp(170px,21vw,260px); height: clamp(170px,21vw,260px);
+  background: #fff; border: none;
+  border-radius: clamp(8px,1.2vw,14px);
+  overflow: hidden; padding: clamp(8px,1vw,12px);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(153,221,200,0.18);
+}
+.qr-box img { width: 100%; height: 100%; object-fit: contain; border-radius: inherit; }
+.qr-ph-icon { font-size: clamp(1.8rem,3.2vw,2.8rem); opacity: 0.18; }
+.qr-ph-hint { font-size: clamp(0.43rem,0.65vw,0.55rem); color: var(--text-dim); text-align: center; line-height: 1.4; max-width: 88%; }
+.qr-label   { font-size: var(--small-size); color: var(--accent-mint); font-weight: 600; text-align: center; }
+.qr-url     { font-size: clamp(0.48rem,0.72vw,0.6rem); color: var(--text-dim); text-align: center; }
+
+/* ===================================================
+   SLIDE 7 — MUCHAS GRACIAS
+   =================================================== */
+.slide-thanks { background: var(--bg-deep); }
+.slide-thanks::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(101,155,94,0.1) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 35% at 15% 85%, rgba(153,221,200,0.05) 0%, transparent 55%);
+}
+.slide-thanks::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(153,221,200,0.018) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(153,221,200,0.018) 1px, transparent 1px);
+  background-size: 66px 66px;
+}
+.thanks-content {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  position: relative; z-index: 1; gap: clamp(0.5rem, 1.5vh, 1.5rem);
+}
+.thanks-word {
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 800; color: var(--text-primary);
+  letter-spacing: -0.03em; line-height: 1.05;
+}
+.thanks-tagline {
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+  color: var(--accent-mint); font-style: italic; font-weight: 300;
+}
+
+/* Team row — slide 7 */
+.team-final {
+  display: flex; flex-direction: row; justify-content: center; align-items: flex-start;
+  gap: clamp(1rem, 3.5vw, 2.8rem);
+  margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
+}
+.team-member-final {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(0.25rem, 0.5vh, 0.5rem);
+  opacity: 0;
+}
+@keyframes slideUpTeam {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide.visible .team-member-final {
+  animation: slideUpTeam 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.slide.visible .team-member-final:nth-child(1) { animation-delay: 1.3s; }
+.slide.visible .team-member-final:nth-child(2) { animation-delay: 1.55s; }
+.slide.visible .team-member-final:nth-child(3) { animation-delay: 1.8s; }
+.slide.visible .team-member-final:nth-child(4) { animation-delay: 2.05s; }
+.slide.visible .team-member-final:nth-child(5) { animation-delay: 2.3s; }
+.team-avatar-final {
+  width: clamp(72px, 10.5vh, 115px);
+  height: clamp(72px, 10.5vh, 115px);
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: 3px solid #99DDC8;
+  box-shadow: 0 0 0 1px rgba(153,221,200,0.25), 0 6px 24px rgba(0,0,0,0.55);
+}
+.team-avatar-final img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.team-name-final {
+  font-size: clamp(0.6rem, 1vw, 0.82rem);
+  font-weight: 700; color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+.team-role-final {
+  font-size: clamp(0.5rem, 0.75vw, 0.68rem);
+  font-weight: 400; color: #99DDC8;
+  opacity: 0.8; letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media (max-height: 600px) {
+  .team-avatar-final { width: 58px; height: 58px; }
+  .team-final { gap: clamp(0.6rem, 2vw, 1.5rem); }
+}
+@media (max-height: 500px) {
+  .team-avatar-final { width: 46px; height: 46px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Barra de progreso -->
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<!-- Puntos de navegación -->
+<nav class="nav-dots" id="navDots" aria-label="Navegación slides"></nav>
+
+<!-- Hint teclado -->
+<div class="keyboard-hint" id="kbHint">
+  <span class="kbd">→</span> siguiente &nbsp;
+  <span class="kbd">N</span> notas &nbsp;
+  <span class="kbd">E</span> editar
+</div>
+<div class="notes-toggle-hint" aria-hidden="true">Notas: N</div>
+
+<!-- Panel notas del presentador -->
+<div class="notes-panel" id="notesPanel" role="region" aria-label="Notas del presentador">
+  <button class="notes-close" id="notesClose" aria-label="Cerrar notas">×</button>
+  <div class="notes-label">Notas del presentador</div>
+  <div class="notes-text" id="notesText"></div>
+</div>
+
+<!-- Banner modo edición -->
+<div class="edit-banner" id="editBanner">✏️ Modo edición — Ctrl+S para guardar</div>
+
+<!-- Edición inline -->
+<div class="edit-hotzone" id="editHotzone" aria-hidden="true"></div>
+<button class="edit-toggle" id="editToggle" aria-label="Modo edición (E)">✏️ Editar</button>
+
+
+<!-- ================================================
+     SLIDE 1 — HOOK / DOLOR
+     ================================================ -->
+<section class="slide slide-hook" id="slide-1" aria-label="Slide 1: Problema"
+  data-notes="El problema no empieza cuando algo se rompe… empieza cuando intentás solucionarlo. (pausa larga) ¿Cuántas veces les pasó esto? Ese momento de pánico, afuera de tu casa, sin saber a quién llamar, con miedo a que te estafen. Eso es exactamente lo que SolvIT viene a resolver.">
+  <div class="accent-line"></div>
+
+  <!-- Caños rotos — decoración de fondo, pointer-events:none -->
+  <div aria-hidden="true" class="pipes-scene">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"
+         preserveAspectRatio="xMidYMid slice"
+         style="width:100%;height:100%;display:block;">
+      <defs>
+        <!-- Caño vertical: degradado L→R para efecto cilíndrico -->
+        <linearGradient id="pkV" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#071318"/>
+          <stop offset="22%"  stop-color="#1a2e3e"/>
+          <stop offset="50%"  stop-color="#243c4e"/>
+          <stop offset="78%"  stop-color="#1a2e3e"/>
+          <stop offset="100%" stop-color="#071318"/>
+        </linearGradient>
+        <!-- Caño horizontal: degradado T→B -->
+        <linearGradient id="pkH" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#071318"/>
+          <stop offset="22%"  stop-color="#1a2e3e"/>
+          <stop offset="50%"  stop-color="#243c4e"/>
+          <stop offset="78%"  stop-color="#1a2e3e"/>
+          <stop offset="100%" stop-color="#071318"/>
+        </linearGradient>
+        <!-- Codo: degradado radial -->
+        <radialGradient id="pkJ" cx="38%" cy="35%" r="65%">
+          <stop offset="0%"   stop-color="#2e4255"/>
+          <stop offset="100%" stop-color="#091620"/>
+        </radialGradient>
+        <!-- Highlight mint en caño vertical -->
+        <linearGradient id="pkHiV" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0"/>
+          <stop offset="38%"  stop-color="#64c8b4" stop-opacity="0.13"/>
+          <stop offset="100%" stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Highlight mint en caño horizontal -->
+        <linearGradient id="pkHiH" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0.13"/>
+          <stop offset="55%"  stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <style>
+        @keyframes wDrip {
+          0%   { transform: translateY(0px);   opacity: 0;   }
+          8%   { opacity: 0.88; }
+          85%  { opacity: 0.72; }
+          100% { transform: translateY(92px);  opacity: 0;   }
+        }
+        /* Drips */
+        .pda { animation: wDrip 1.4s ease-in 0s    infinite backwards; }
+        .pdb { animation: wDrip 1.4s ease-in 0.55s infinite backwards; }
+        .pdc { animation: wDrip 1.9s ease-in 0.18s infinite backwards; }
+        .pdd { animation: wDrip 1.3s ease-in 0.08s infinite backwards; }
+        .pde { animation: wDrip 1.3s ease-in 0.70s infinite backwards; }
+        .pdf { animation: wDrip 1.7s ease-in 1.10s infinite backwards; }
+      </style>
+
+      <!-- ════════════════════════════
+           CAÑO IZQUIERDO
+           Vertical → codo → horizontal
+           ════════════════════════════ -->
+      <g opacity="0.74">
+        <!-- Tramo vertical -->
+        <rect x="96" y="-12" width="24" height="484" rx="2"
+              fill="url(#pkV)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="101" y="-12" width="9" height="484" rx="1" fill="url(#pkHiV)"/>
+        <!-- Tramo horizontal -->
+        <rect x="108" y="461" width="305" height="24" rx="2"
+              fill="url(#pkH)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="108" y="465" width="305" height="7" rx="1" fill="url(#pkHiH)"/>
+        <!-- Tapa derecha -->
+        <rect x="410" y="456" width="12" height="34" rx="4"
+              fill="#091620" stroke="rgba(100,192,176,0.15)" stroke-width="1"/>
+        <!-- Codo — al final para quedar por encima de ambos caños -->
+        <circle cx="108" cy="472" r="18" fill="url(#pkJ)"
+                stroke="rgba(100,192,176,0.20)" stroke-width="1"/>
+      </g>
+
+      <!-- ════════════════════════════
+           CAÑO DERECHO
+           Vertical → codo → horizontal izquierda
+           ════════════════════════════ -->
+      <g opacity="0.70">
+        <!-- Tramo vertical -->
+        <rect x="1800" y="-12" width="24" height="366" rx="2"
+              fill="url(#pkV)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="1805"  y="-12" width="9"  height="366" rx="1" fill="url(#pkHiV)"/>
+        <!-- Tramo horizontal hacia la izquierda -->
+        <rect x="1490" y="343" width="322" height="24" rx="2"
+              fill="url(#pkH)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="1490" y="347" width="322" height="7"  rx="1" fill="url(#pkHiH)"/>
+        <!-- Tapa izquierda -->
+        <rect x="1480" y="338" width="12" height="34" rx="4"
+              fill="#091620" stroke="rgba(100,192,176,0.15)" stroke-width="1"/>
+        <!-- Codo — al final para quedar por encima de ambos caños -->
+        <circle cx="1812" cy="354" r="18" fill="url(#pkJ)"
+                stroke="rgba(100,192,176,0.20)" stroke-width="1"/>
+      </g>
+
+      <!-- ════════════════════════════
+           GOTAS — fuera de los grupos para quedar por adelante
+           ════════════════════════════ -->
+      <!-- Gotas izquierda — boca de la tapa derecha (x≈416, y≈491) -->
+      <ellipse class="pda" cx="416" cy="491" rx="4"   ry="5.5" fill="#64c8b4"/>
+      <ellipse class="pdb" cx="412" cy="491" rx="3"   ry="4.5" fill="#82d8c8"/>
+      <ellipse class="pdc" cx="420" cy="491" rx="2.5" ry="3.5" fill="#64c8b4"/>
+      <!-- Gotas derecha — boca de la tapa izquierda (x≈1486, y≈373) -->
+      <ellipse class="pdd" cx="1486" cy="373" rx="4"   ry="5.5" fill="#64c8b4"/>
+      <ellipse class="pde" cx="1482" cy="373" rx="3"   ry="4.5" fill="#82d8c8"/>
+      <ellipse class="pdf" cx="1490" cy="373" rx="2.5" ry="3.5" fill="#64c8b4"/>
+
+    </svg>
+  </div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">01 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="hook-content">
+      <h1 class="hook-question reveal">
+        ¿Cuántas veces se te rompió la cerradura de tu casa y eso generó que te quedes
+        <span class="hi">afuera sin saber a quién llamar?</span>
+      </h1>
+      <p class="hook-sub reveal">
+        El problema no empieza cuando algo se rompe…<br>
+        empieza cuando intentás solucionarlo.
+      </p>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span class="source-text">SolvIT — Pitch para inversores 2026</span>
+    <span class="source-text" style="font-style:italic">Tu hogar en orden, tu vida en paz.</span>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 2 — DATOS DEL PROBLEMA
+     Fuentes: INDEC 2026 + Encuesta propia SolvIT
+     ================================================ -->
+<section class="slide slide-data" id="slide-2" aria-label="Slide 2: Datos"
+  data-notes="Hoy en Argentina faltan técnicos calificados: plomeros, electricistas, cerrajeros. Y según el INDEC, en 2026 la demanda creció más de un 40% interanual. (pausa) Pero más revelador es lo que encontramos en nuestra investigación: el 92% contrató servicios el último mes. Más del 75% llegó tarde o faltó al trabajo por esperar a un técnico. Esto no es un inconveniente ocasional — es sistemático. Y genera un mercado de 550 millones de dólares anuales, informal y opaco.">
+  <div class="accent-line"></div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">02 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="s2-layout">
+
+      <!-- Izquierda: título del problema + citas externas -->
+      <div class="s2-left">
+        <h2 class="s2-headline">Nadie sabe a quién llamar.<br><em>Ni si el precio es justo.</em></h2>
+        <div class="s2-quotes">
+          <div class="s2-quote">
+            <span class="s2-quote-text">"En Argentina hay escasez de trabajadores técnicos calificados, con alta demanda y oferta limitada."</span>
+            <a class="s2-quote-src" href="https://www.infobae.com/economia/2026/02/01/la-escasez-de-trabajadores-tecnicos-calificados-eleva-los-costos-de-servicios-basicos-para-el-hogar/" target="_blank" rel="noopener">Infobae, feb. 2026</a>
+          </div>
+          <div class="s2-quote">
+            <span class="s2-quote-text">"Conseguir un técnico calificado puede demorar días o incluso semanas."</span>
+            <a class="s2-quote-src" href="https://www.totalmedios.com/nota/63200/argentina-necesita-mas-marios-plomeros-se-buscan" target="_blank" rel="noopener">Total Medios</a>
+          </div>
+          <div class="s2-quote">
+            <span class="s2-quote-text">"El gasto en vivienda y mantenimiento del hogar es uno de los componentes principales del consumo en Argentina."</span>
+            <a class="s2-quote-src" href="https://chequeado.com/el-explicador/como-mide-la-inflacion-el-indec-que-productos-y-servicios-releva-y-cuales-no/" target="_blank" rel="noopener">Chequeado / INDEC</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Derecha: datos del dolor (encuesta SolvIT) -->
+      <div class="s2-right">
+        <div class="s2-stat">
+          <span class="s2-num">75%</span>
+          <span class="s2-label">faltó al trabajo o estudio por esperar a un técnico</span>
+          <span class="s2-src">Encuesta SolvIT</span>
+        </div>
+        <div class="s2-stat">
+          <span class="s2-num">60%</span>
+          <span class="s2-label">no contrata por falta de garantías o calidad incierta</span>
+          <span class="s2-src">Encuesta SolvIT</span>
+        </div>
+        <div class="s2-stat">
+          <span class="s2-num">58%</span>
+          <span class="s2-label">cita la falta de referencias como su principal freno</span>
+          <span class="s2-src">Encuesta SolvIT</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span></span>
+    <span class="source-text">Datos verificables disponibles a solicitud</span>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 3 — DEMO / MVP
+     Video: "video de la app.mp4"
+     ================================================ -->
+<section class="slide slide-demo" id="slide-3" aria-label="Slide 3: Demo"
+  data-notes="Con nuestro MVP estamos armando la red de técnicos y validando que la gente realmente necesita esta solución, usando una web simple pero clave. Porque por primera vez, la tecnología y la IA nos permite restructurar la manera en la cual resolvemos el problema. (mostrar demo en pantalla)">
+  <div class="accent-line"></div>
+
+  <!-- Logo watermark — fondo decorativo, no interfiere con el layout -->
+  <div aria-hidden="true" style="position:absolute;left:-4%;bottom:-8%;width:clamp(280px,42vw,560px);opacity:0.22;pointer-events:none;user-select:none;z-index:0;">
+    <img src="ossuna.png" alt="" style="width:100%;display:block;filter:brightness(1.1) drop-shadow(4px 8px 24px rgba(0,0,0,0.95)) drop-shadow(2px 4px 8px rgba(0,0,0,0.85)) drop-shadow(-1px -2px 6px rgba(255,255,255,0.08));">
+  </div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">03 / 07</span>
+  </div>
+
+  <div class="slide-content" style="position:relative;z-index:1;">
+    <div class="demo-layout">
+
+      <!-- Info + pasos -->
+      <div class="demo-info">
+        <h2 class="demo-title">Así funciona SolvIT</h2>
+        <ul class="demo-steps">
+          <li class="demo-step">
+            <span class="step-num">1</span>
+            <span class="step-text"><strong>Describís el problema</strong> — con texto, foto o video. La IA entiende el contexto.</span>
+          </li>
+          <li class="demo-step">
+            <span class="step-num">2</span>
+            <span class="step-text"><strong>Recibís un rango de precios</strong> — antes de comprometerte, sabés cuánto vale.</span>
+          </li>
+          <li class="demo-step">
+            <span class="step-num">3</span>
+            <span class="step-text"><strong>Aceptás el presupuesto</strong> — si el rango te conviene, confirmás y pedís el servicio.</span>
+          </li>
+          <li class="demo-step">
+            <span class="step-num">4</span>
+            <span class="step-text"><strong>Llega el técnico</strong> — verificado, en tu zona, a la hora que elegís.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Phone mockup -->
+      <div class="phone-wrap reveal-scale">
+        <div class="phone-frame">
+          <!--
+            Video: "video de la app.mp4" — misma carpeta que este HTML.
+            Corre automáticamente (autoplay, muted, loop).
+          -->
+          <video class="phone-video" id="demoVideo"
+                 autoplay loop muted playsinline
+                 src="video de la app_final.mp4">
+          </video>
+          <div class="phone-ph" id="phonePh">
+            <div class="phone-ph-icon">▶</div>
+            <p>Agregar<br><strong>video de la app.mp4</strong><br>junto a este archivo</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 4 — SOLVIT (QUIÉNES SOMOS)
+     Logo + propuesta + 3 pilares + equipo
+     ================================================ -->
+<section class="slide slide-company" id="slide-4" aria-label="Slide 4: Cliente Ideal"
+  data-notes="¿A quién le resolvemos la vida? Nuestro cliente tiene entre 26 y 33 años, vive en CABA o Zona Norte, NSE Medio-Alto. Ya usa Uber, Rappi, Pedidos Ya — está listo para este modelo. Tiene responsabilidad real sobre el hogar pero no sabe a quién llamar cuando algo se rompe. Su dolor no es el arreglo en sí: es la desconfianza, el miedo a pagar de más y la pérdida de tiempo. El 75% admitió haber faltado al trabajo por esperar a un técnico. No busca el arreglo — busca recuperar el control de su día.">
+  <div class="accent-line"></div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">04 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="s4-layout">
+
+      <!-- Izquierda: avatar pixel art + identidad -->
+      <div class="s4-persona">
+        <div class="s4-avatar-wrap">
+          <div class="s4-glow"></div>
+          <img src="obi won waving STICKER.gif" alt="Nuestro usuario" class="s4-avatar">
+          <span class="s4-avatar-label">nuestro usuario</span>
+        </div>
+        <div class="s4-chips">
+          <span class="s4-chip">26–33 años</span>
+          <span class="s4-chip">CABA + Zona Norte</span>
+          <span class="s4-chip">NSE Medio–Medio Alto</span>
+          <span class="s4-chip">Pago digital</span>
+        </div>
+        <p class="s4-quote">
+          "Nadie que use Uber todos los días debería tardar 3 días en encontrar un plomero."
+        </p>
+      </div>
+
+      <!-- Derecha: lista editorial con números fantasma -->
+      <div class="s4-right">
+        <span class="s4-eyebrow">Cliente ideal</span>
+        <h2 class="s4-title">Pobre de tiempo,<br><em>rico en exigencia.</em></h2>
+        <div class="s4-rule"></div>
+        <div class="s4-list">
+          <div class="s4-item">
+            <span class="s4-num">01</span>
+            <div class="s4-item-body">
+              <span class="s4-item-label">Dolor principal</span>
+              <span class="s4-item-val">Desconfianza + miedo a pagar de más</span>
+              <span class="s4-item-sub">Falta de referencias: freno nº1 — 58% de encuestados</span>
+            </div>
+          </div>
+          <div class="s4-item">
+            <span class="s4-num">02</span>
+            <div class="s4-item-body">
+              <span class="s4-item-label">Qué valora</span>
+              <span class="s4-item-val">Rapidez, precio claro y reputación visible</span>
+              <span class="s4-item-sub">76% usaría la app · velocidad > precio en urgencias</span>
+            </div>
+          </div>
+          <div class="s4-item">
+            <span class="s4-num">03</span>
+            <div class="s4-item-body">
+              <span class="s4-item-label">Perfil digital</span>
+              <span class="s4-item-val">Usa apps de servicio al menos semanalmente</span>
+              <span class="s4-item-sub">Uber, Rappi, Pedidos Ya · ya está listo para este modelo</span>
+            </div>
+          </div>
+          <div class="s4-item">
+            <span class="s4-num">04</span>
+            <div class="s4-item-body">
+              <span class="s4-item-label">Impacto real</span>
+              <span class="s4-item-val">75% faltó al trabajo por esperar un técnico</span>
+              <span class="s4-item-sub">No busca el arreglo — busca recuperar su día</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 5 — TAM SAM SOM
+     Guardar imagen como "tam-sam-som.png" junto a este HTML
+     ================================================ -->
+<section class="slide slide-market" id="slide-5" aria-label="Slide 5: Mercado"
+  data-notes="¿Y el mercado aguanta? Hoy el mercado argentino de arreglos supera los 550 millones de dólares anuales solo en mano de obra básica — informal, opaco e inseguro. En CABA, el 42% del e-commerce se concentra en servicios del hogar. El 92% de los responsables del hogar contrató un servicio el último mes. El problema es grande. Pero la oportunidad es enorme.">
+  <div class="accent-line"></div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">05 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="market-layout">
+
+      <!-- Círculos concéntricos CSS — TAM/SAM/SOM -->
+      <div class="market-img-area">
+        <div class="concentric-circles">
+          <!-- Ondas expansivas desde el SOM (animación continua) -->
+          <div class="cc-ripple"></div>
+          <div class="cc-ripple cc-ripple-2"></div>
+          <!-- Anillo TAM (externo) -->
+          <div class="cc-ring cc-tam">
+            <span class="cc-label">TAM</span>
+          </div>
+          <!-- Anillo SAM (medio) -->
+          <div class="cc-ring cc-sam">
+            <span class="cc-label">SAM</span>
+          </div>
+          <!-- Círculo SOM (interno) -->
+          <div class="cc-ring cc-som">
+            <span class="cc-center">SOM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Datos de mercado -->
+      <div class="market-data">
+        <span class="section-tag reveal">Tamaño de mercado</span>
+        <h2 class="reveal">La oportunidad<br>es enorme.</h2>
+        <div class="market-tiers">
+
+          <div class="market-tier reveal">
+            <div class="tier-header">
+              <span class="tier-acro">TAM — Total Addressable Market</span>
+              <span class="tier-value">180M hogares</span>
+            </div>
+            <ul class="tier-bullets">
+              <li>100% de los hogares de LATAM</li>
+              <li>USD $100 anuales por hogar</li>
+              <li>Equivale a $20.000M</li>
+            </ul>
+          </div>
+
+          <div class="market-tier reveal">
+            <div class="tier-header">
+              <span class="tier-acro">SAM — Serviceable Available Market</span>
+              <span class="tier-value">~15.7M hogares</span>
+            </div>
+            <ul class="tier-bullets">
+              <li>100% de los hogares de Argentina</li>
+              <li>85% requiere al menos 1 servicio técnico al año</li>
+              <li>Equivale a +550MM ARS anuales en mano de obra</li>
+            </ul>
+          </div>
+
+          <div class="market-tier reveal">
+            <div class="tier-header">
+              <span class="tier-acro">SOM — Serviceable Obtainable Market</span>
+              <span class="tier-value">~500K hogares</span>
+            </div>
+            <ul class="tier-bullets">
+              <li>CABA + GBA Zona Norte, segmento ABC1/C2</li>
+              <li>Alta digitalización: 8/10 adultos compradores online</li>
+              <li>42% del e-commerce AMBA = hogar y servicios</li>
+            </ul>
+          </div>
+
+        </div>
+        <p class="market-footnote reveal">
+          Fuente: Censo 2022 INDEC · Consultora Moiguer/CACE 2025 · Proyecciones SolvIT 2026
+        </p>
+        <p class="market-unit-note reveal">1 hogar = 1 unidad de vivienda particular</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 6 — CIERRE
+     Guardar QR como "qr.png" junto a este HTML
+     ================================================ -->
+<section class="slide slide-closing" id="slide-6" aria-label="Slide 6: Cierre"
+  data-notes="Hoy los invito a ser parte de esto. A ponerle fin a dormir en el pallier porque se te rompió la cerradura. A ponerle fin a que te cobren diez veces más porque vivís en Belgrano. A transformar un mercado enorme… en una experiencia simple, segura y escalable. Porque cuando tu casa está en orden… tu vida también lo está. Y eso… para nuestro equipo lo es todo.">
+  <div class="accent-line"></div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">06 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="closing-layout">
+
+      <!-- Texto de cierre -->
+      <div class="closing-text">
+<div class="closing-quote reveal">
+          Porque cuando tu casa<br>está en orden…<br>
+          <em>tu vida también lo está.</em>
+        </div>
+        <p class="closing-sub reveal">Y eso… para nuestro equipo lo es todo.</p>
+        <div class="contact-row reveal">
+          <span class="contact-item">SolvIT</span>
+          <span class="contact-sep">·</span>
+          <span class="contact-item">Managed Marketplace</span>
+          <span class="contact-sep">·</span>
+          <span class="contact-item">CABA, Argentina · 2026</span>
+        </div>
+      </div>
+
+      <!-- QR al MVP -->
+      <div class="qr-area reveal-scale">
+        <div class="qr-box">
+          <img src="qr para el mvp.png" alt="QR Acceso MVP — solvitpanel.vercel.app">
+        </div>
+        <span class="qr-label">Probá el MVP</span>
+        <span class="qr-url">solvitpanel.vercel.app</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================
+     SLIDE 7 — MUCHAS GRACIAS
+     ================================================ -->
+<section class="slide slide-thanks" id="slide-7" aria-label="Slide 7: Gracias"
+  data-notes="Muchas gracias. (dejar que la slide hable por sí sola — espacio para preguntas)">
+  <div class="accent-line"></div>
+
+  <!-- Caños arreglados — misma posición que slide 1, agua en chorro continuo -->
+  <div aria-hidden="true" class="pipes-scene">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"
+         preserveAspectRatio="xMidYMid slice"
+         style="width:100%;height:100%;display:block;">
+      <defs>
+        <linearGradient id="t7V" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#071318"/>
+          <stop offset="22%"  stop-color="#1a2e3e"/>
+          <stop offset="50%"  stop-color="#243c4e"/>
+          <stop offset="78%"  stop-color="#1a2e3e"/>
+          <stop offset="100%" stop-color="#071318"/>
+        </linearGradient>
+        <linearGradient id="t7H" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#071318"/>
+          <stop offset="22%"  stop-color="#1a2e3e"/>
+          <stop offset="50%"  stop-color="#243c4e"/>
+          <stop offset="78%"  stop-color="#1a2e3e"/>
+          <stop offset="100%" stop-color="#071318"/>
+        </linearGradient>
+        <radialGradient id="t7J" cx="38%" cy="35%" r="65%">
+          <stop offset="0%"   stop-color="#2e4255"/>
+          <stop offset="100%" stop-color="#091620"/>
+        </radialGradient>
+        <linearGradient id="t7HiV" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0"/>
+          <stop offset="38%"  stop-color="#64c8b4" stop-opacity="0.13"/>
+          <stop offset="100%" stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="t7HiH" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0.13"/>
+          <stop offset="55%"  stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Gradiente del chorro: sólido arriba, se desvanece abajo -->
+        <linearGradient id="t7StL" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0.65"/>
+          <stop offset="65%"  stop-color="#64c8b4" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="t7StR" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#64c8b4" stop-opacity="0.65"/>
+          <stop offset="65%"  stop-color="#64c8b4" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#64c8b4" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <style>
+        /* Pulso suave del chorro base */
+        @keyframes t7Pulse {
+          0%, 100% { opacity: 0.75; }
+          50%      { opacity: 1; }
+        }
+        /* Destellos de flujo: partículas que bajan por el chorro */
+        @keyframes t7Flow {
+          0%   { transform: translateY(0px);   opacity: 0; }
+          4%   { opacity: 0.95; }
+          88%  { opacity: 0.85; }
+          100% { transform: translateY(290px); opacity: 0; }
+        }
+        .t7ba { animation: t7Pulse 1.4s ease-in-out infinite; }
+        .t7bb { animation: t7Pulse 1.4s ease-in-out infinite 0.5s; }
+        .t7f1 { animation: t7Flow 0.85s linear 0s    infinite backwards; }
+        .t7f2 { animation: t7Flow 0.85s linear 0.28s infinite backwards; }
+        .t7f3 { animation: t7Flow 1.05s linear 0.14s infinite backwards; }
+        .t7f4 { animation: t7Flow 0.85s linear 0.07s infinite backwards; }
+        .t7f5 { animation: t7Flow 0.85s linear 0.42s infinite backwards; }
+        .t7f6 { animation: t7Flow 1.05s linear 0.58s infinite backwards; }
+      </style>
+
+      <!-- ════ CAÑO IZQUIERDO (idéntico al de slide 1) ════ -->
+      <g opacity="0.74">
+        <rect x="96" y="-12" width="24" height="484" rx="2"
+              fill="url(#t7V)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="101" y="-12" width="9" height="484" rx="1" fill="url(#t7HiV)"/>
+        <rect x="108" y="461" width="305" height="24" rx="2"
+              fill="url(#t7H)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="108" y="465" width="305" height="7" rx="1" fill="url(#t7HiH)"/>
+        <rect x="410" y="456" width="12" height="34" rx="4"
+              fill="#091620" stroke="rgba(100,192,176,0.15)" stroke-width="1"/>
+        <!-- Codo al final — encima de ambos caños -->
+        <circle cx="108" cy="472" r="18" fill="url(#t7J)"
+                stroke="rgba(100,192,176,0.20)" stroke-width="1"/>
+      </g>
+      <!-- Chorro continuo izquierda (boca: x≈416, y=490) -->
+      <rect x="412" y="490" width="8" height="300" rx="3" fill="url(#t7StL)" class="t7ba"/>
+      <rect class="t7f1" x="413" y="490" width="4" height="16" rx="2" fill="#64c8b4"/>
+      <rect class="t7f2" x="414" y="490" width="3" height="10" rx="1" fill="#90ddd0"/>
+      <rect class="t7f3" x="415" y="490" width="2" height="20" rx="1" fill="#64c8b4"/>
+
+      <!-- ════ CAÑO DERECHO (idéntico al de slide 1) ════ -->
+      <g opacity="0.70">
+        <rect x="1800" y="-12" width="24" height="366" rx="2"
+              fill="url(#t7V)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="1805"  y="-12" width="9"  height="366" rx="1" fill="url(#t7HiV)"/>
+        <rect x="1490" y="343" width="322" height="24" rx="2"
+              fill="url(#t7H)" stroke="rgba(100,192,176,0.18)" stroke-width="1"/>
+        <rect x="1490" y="347" width="322" height="7"  rx="1" fill="url(#t7HiH)"/>
+        <rect x="1480" y="338" width="12" height="34" rx="4"
+              fill="#091620" stroke="rgba(100,192,176,0.15)" stroke-width="1"/>
+        <!-- Codo al final — encima de ambos caños -->
+        <circle cx="1812" cy="354" r="18" fill="url(#t7J)"
+                stroke="rgba(100,192,176,0.20)" stroke-width="1"/>
+      </g>
+      <!-- Chorro continuo derecha (boca: x≈1486, y=372) -->
+      <rect x="1482" y="372" width="8" height="300" rx="3" fill="url(#t7StR)" class="t7bb"/>
+      <rect class="t7f4" x="1483" y="372" width="4" height="16" rx="2" fill="#64c8b4"/>
+      <rect class="t7f5" x="1484" y="372" width="3" height="10" rx="1" fill="#90ddd0"/>
+      <rect class="t7f6" x="1485" y="372" width="2" height="20" rx="1" fill="#64c8b4"/>
+
+    </svg>
+  </div>
+
+  <div class="slide-header">
+    <span></span>
+    <span class="slide-num">07 / 07</span>
+  </div>
+
+  <div class="slide-content">
+    <div class="thanks-content">
+      <div class="thanks-word reveal">Muchas<br>Gracias.</div>
+      <p class="thanks-tagline reveal">"Tu hogar en orden, tu vida en paz."</p>
+
+      <div class="team-final">
+        <div class="team-member-final">
+          <div class="team-avatar-final">
+            <img src="foto Matteo Sbarbi Osuna CEO.jpg" alt="Matteo" style="transform:scale(1.6);transform-origin:50% 52%;object-position:50% 52%;">
+          </div>
+          <span class="team-name-final">Matteo</span>
+          <span class="team-role-final">CEO</span>
+        </div>
+        <div class="team-member-final">
+          <div class="team-avatar-final">
+            <img src="Anna Abad CPO Head of Product.jpg" alt="Anna">
+          </div>
+          <span class="team-name-final">Anna</span>
+          <span class="team-role-final">CPO</span>
+        </div>
+        <div class="team-member-final">
+          <div class="team-avatar-final">
+            <img src="Vari Mironov CTO (Chief Technology Officer).jpg" alt="Vari">
+          </div>
+          <span class="team-name-final">Vari</span>
+          <span class="team-role-final">CTO</span>
+        </div>
+        <div class="team-member-final">
+          <div class="team-avatar-final">
+            <img src="Rocio Lado CMO Chief Marketing Officer.jpg" alt="Rocio">
+          </div>
+          <span class="team-name-final">Rocio</span>
+          <span class="team-role-final">CMO</span>
+        </div>
+        <div class="team-member-final">
+          <div class="team-avatar-final">
+            <img src="Pedro Dibelli COO (Chief Operating Officer).jpg" alt="Pedro" style="transform:scale(1.6);transform-origin:50% 52%;object-position:50% 52%;">
+          </div>
+          <span class="team-name-final">Pedro</span>
+          <span class="team-role-final">COO</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+/* ===================================================
+   CONTROLADOR DE PRESENTACIÓN
+   Navegación, animaciones, progreso, dots
+   =================================================== */
+class SlidePresentation {
+  constructor() {
+    this.slides  = Array.from(document.querySelectorAll('.slide'));
+    this.total   = this.slides.length;
+    this.current = 0;
+    this.progressBar = document.getElementById('progressBar');
+    this.kbHint      = document.getElementById('kbHint');
+
+    this.setupObserver();
+    this.setupKeyboard();
+    this.setupTouch();
+    this.setupWheel();
+    this.setupNavDots();
+    this.hideHintSoon();
+  }
+
+  /* Intersection Observer — añade .visible para las animaciones */
+  setupObserver() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const idx = this.slides.indexOf(e.target);
+          if (idx !== -1) this.onChange(idx);
+        }
+      });
+    }, { threshold: 0.5 });
+    this.slides.forEach(s => obs.observe(s));
+  }
+
+  onChange(idx) {
+    this.current = idx;
+    const pct = this.total > 1 ? (idx / (this.total - 1)) * 100 : 0;
+    this.progressBar.style.width = pct + '%';
+    document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    notesController.update(this.slides[idx]);
+  }
+
+  goTo(idx) {
+    if (idx < 0 || idx >= this.total) return;
+    this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+  }
+  next() { this.goTo(this.current + 1); }
+  prev() { this.goTo(this.current - 1); }
+
+  setupKeyboard() {
+    document.addEventListener('keydown', e => {
+      if (e.target.getAttribute('contenteditable') === 'true') return;
+      if (['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)) { e.preventDefault(); this.next(); }
+      else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); this.prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
+      else if (e.key === 'End')  { e.preventDefault(); this.goTo(this.total - 1); }
+    });
+  }
+
+  setupTouch() {
+    let sy = 0, sx = 0;
+    document.addEventListener('touchstart', e => { sy = e.touches[0].clientY; sx = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend',   e => {
+      const dy = sy - e.changedTouches[0].clientY;
+      const dx = sx - e.changedTouches[0].clientX;
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 45) { dy > 0 ? this.next() : this.prev(); }
+    }, { passive: true });
+  }
+
+  setupWheel() {
+    let last = 0;
+    document.addEventListener('wheel', e => {
+      const now = Date.now(); if (now - last < 750) return; last = now;
+      e.deltaY > 0 ? this.next() : this.prev();
+    }, { passive: true });
+  }
+
+  setupNavDots() {
+    const nav = document.getElementById('navDots');
+    this.slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', `Slide ${i + 1}`);
+      d.addEventListener('click', () => this.goTo(i));
+      nav.appendChild(d);
+    });
+  }
+
+  hideHintSoon() {
+    setTimeout(() => { if (this.kbHint) this.kbHint.classList.add('hidden'); }, 5500);
+    document.addEventListener('keydown', () => { if (this.kbHint) this.kbHint.classList.add('hidden'); }, { once: true });
+  }
+}
+
+/* ===================================================
+   NOTAS DEL PRESENTADOR
+   N = abrir/cerrar panel de notas
+   =================================================== */
+const notesController = {
+  panel:  document.getElementById('notesPanel'),
+  text:   document.getElementById('notesText'),
+  close:  document.getElementById('notesClose'),
+  open:   false,
+
+  toggle() {
+    this.open = !this.open;
+    this.panel.classList.toggle('open', this.open);
+  },
+  update(slide) {
+    if (this.text) this.text.textContent = (slide && slide.dataset.notes) || '';
+  }
+};
+
+document.addEventListener('keydown', e => {
+  if ((e.key === 'n' || e.key === 'N') && !e.target.getAttribute('contenteditable')) notesController.toggle();
+  if (e.key === 'Escape' && notesController.open) notesController.toggle();
+});
+notesController.close.addEventListener('click', () => notesController.toggle());
+
+/* ===================================================
+   EDITOR INLINE
+   E = activar/desactivar edición
+   Ctrl+S = guardar y exportar HTML
+   =================================================== */
+const editor = {
+  active: false,
+  key: 'solvit-pitch-v1',
+
+  selectors: [
+    '.hook-question', '.hook-sub',
+    '.stat-big', '.stat-desc', '.data2-headline h2',
+    '.big-logo-name', '.company-tagline', '.company-desc',
+    '.pillar-title', '.pillar-desc',
+    '.demo-title', '.step-text',
+    '.tier-value',
+    '.closing-quote', '.closing-sub',
+    'h2'
+  ].join(', '),
+
+  elements() { return document.querySelectorAll(this.selectors); },
+
+  toggle() {
+    this.active = !this.active;
+    const toggle = document.getElementById('editToggle');
+    const banner = document.getElementById('editBanner');
+    this.elements().forEach(el => {
+      el.contentEditable = this.active ? 'true' : 'false';
+      el.spellcheck = false;
+    });
+    toggle.classList.toggle('active', this.active);
+    banner.classList.toggle('show', this.active);
+    if (!this.active) this.save();
+  },
+
+  save() {
+    const data = {};
+    this.elements().forEach((el, i) => { data[i] = el.innerHTML; });
+    try { localStorage.setItem(this.key, JSON.stringify(data)); } catch(e) {}
+  },
+
+  load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(this.key) || 'null');
+      if (!saved) return;
+      this.elements().forEach((el, i) => { if (saved[i] != null) el.innerHTML = saved[i]; });
+    } catch(e) {}
+  },
+
+  exportHTML() {
+    const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'SolvIT-Pitch.html'; a.click();
+    URL.revokeObjectURL(a.href);
+  }
+};
+
+editor.load();
+
+/* Hotzone (JS-based, no CSS ~ selector — ver html-template.md) */
+const hotzone    = document.getElementById('editHotzone');
+const editToggle = document.getElementById('editToggle');
+let hideT = null;
+
+hotzone.addEventListener('mouseenter',    () => { clearTimeout(hideT); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave',    () => { hideT = setTimeout(() => { if (!editor.active) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => { clearTimeout(hideT); });
+editToggle.addEventListener('mouseleave', () => { hideT = setTimeout(() => { if (!editor.active) editToggle.classList.remove('show'); }, 400); });
+hotzone.addEventListener('click',    () => editor.toggle());
+editToggle.addEventListener('click', () => editor.toggle());
+
+document.addEventListener('keydown', e => {
+  if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) editor.toggle();
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.exportHTML(); }
+});
+
+/* ===================================================
+   VIDEO DEMO — mostrar cuando carga, placeholder si no
+   =================================================== */
+const demoVideo = document.getElementById('demoVideo');
+const phonePh   = document.getElementById('phonePh');
+
+if (demoVideo) {
+  demoVideo.addEventListener('loadeddata', () => {
+    demoVideo.style.display = 'block';
+    if (phonePh) phonePh.style.display = 'none';
+  });
+  demoVideo.addEventListener('error', () => {
+    demoVideo.style.display = 'none';
+    if (phonePh) phonePh.style.display = 'flex';
+  });
+}
+
+/* ===================================================
+   INIT
+   =================================================== */
+const pitch = new SlidePresentation();
+</script>
+</body>
+</html>
